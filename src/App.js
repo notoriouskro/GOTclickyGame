@@ -15,29 +15,20 @@ class App extends React.Component{
     totalClick: 0
   }
 
-endGame(){
-  if (this.state.totalClick === 13){
-    alert("Game Over!")
-    this.setState({
-      score: 0,
-      clickedImages: [],
-      totalClick: 0
-    })
+endGame(id){
+  if (this.state.totalClick === 11){
+    alert("You Win!")
+    this.gameOver();
   };
-  var imageClicked = this.state.clickedImages;
-  console.log("ID", this.state.clickedImages)
-  console.log("Clicked", App.alt )
-    if(imageClicked.includes(this.alt)){  
-      alert("Game Over!")
-      this.setState({
-      score: 0,
-      clickedImages: [],
-      totalClick: 0
-      })
-    }
-  
 }
 
+gameOver(){
+  this.setState({
+    score: 0,
+    clickedImages: [],
+    totalClick: 0
+  })
+}
 
 handleShuffle(id) {
   if (!this.state.clickedImages.includes(id)) {
@@ -45,11 +36,15 @@ handleShuffle(id) {
       score: this.state.score + 1,
       clickedImages: [...this.state.clickedImages, id]
     });
-  }
+  }else{
+    alert("You lose! Game over!!!")
+    this.gameOver();
+    }
   this.setState({
     images: this.state.images.sort(() => Math.random() - 0.5),
     totalClick: this.state.totalClick + 1
   });
+  console.log("Clicked Images", this.state.clickedImages);
   this.endGame();
 }
 
